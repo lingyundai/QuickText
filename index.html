@@ -7,55 +7,31 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --green: #00E87A;
       --green-dim: #00b85f;
       --navy: #080D14;
       --card: #0E1620;
-      --card2: #141e2c;
       --border: #1e2e42;
       --text: #E8EFF8;
       --muted: #6B8299;
-      --bubble-in: #162030;
-      --bubble-out: #00E87A;
       --font-display: 'Space Grotesk', sans-serif;
       --font-mono: 'Space Mono', monospace;
     }
-
     html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--navy);
-      color: var(--text);
-      font-family: var(--font-display);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+    body { background: var(--navy); color: var(--text); font-family: var(--font-display); line-height: 1.6; overflow-x: hidden; }
 
     /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 18px 48px;
-      background: rgba(8,13,20,0.85);
+      background: rgba(8,13,20,0.9);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
-    .nav-logo {
-      font-family: var(--font-mono);
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--green);
-      letter-spacing: -0.02em;
-    }
+    .nav-logo { font-family: var(--font-mono); font-weight: 700; font-size: 1.1rem; color: var(--green); letter-spacing: -0.02em; }
     .nav-logo span { color: var(--text); }
-    nav ul { list-style: none; display: flex; gap: 32px; }
-    nav ul a {
-      color: var(--muted); text-decoration: none; font-size: 0.9rem;
-      font-weight: 500; transition: color 0.2s;
-    }
-    nav ul a:hover { color: var(--text); }
     .nav-cta {
       background: var(--green); color: var(--navy);
       padding: 9px 22px; border-radius: 6px;
@@ -68,23 +44,20 @@
     /* HERO */
     .hero {
       min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 60px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 60px;
       padding: 120px 48px 80px;
-      max-width: 1200px;
-      margin: 0 auto;
+      max-width: 1200px; margin: 0 auto;
     }
     .hero-left { max-width: 560px; }
     .eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(0,232,122,0.1);
-      border: 1px solid rgba(0,232,122,0.25);
+      background: rgba(0,232,122,0.08);
+      border: 1px solid rgba(0,232,122,0.2);
       color: var(--green);
       padding: 6px 14px; border-radius: 100px;
-      font-size: 0.78rem; font-weight: 600;
-      letter-spacing: 0.06em; text-transform: uppercase;
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.07em; text-transform: uppercase;
       margin-bottom: 28px;
     }
     .eyebrow::before {
@@ -93,433 +66,188 @@
       animation: pulse 2s infinite;
     }
     @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.8); }
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:0.4; transform:scale(0.8); }
     }
     h1 {
       font-size: clamp(2.4rem, 4vw, 3.6rem);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-      margin-bottom: 24px;
+      font-weight: 700; line-height: 1.1;
+      letter-spacing: -0.03em; margin-bottom: 24px;
     }
-    h1 em {
-      font-style: normal;
-      color: var(--green);
-    }
-    .hero-sub {
-      font-size: 1.1rem;
-      color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 40px;
-      max-width: 460px;
-    }
-    .hero-number {
-      display: flex; align-items: center; gap: 16px;
-      margin-bottom: 16px;
-    }
+    h1 em { font-style: normal; color: var(--green); }
+    .hero-sub { font-size: 1.05rem; color: var(--muted); line-height: 1.75; margin-bottom: 40px; max-width: 460px; }
+    .hero-number { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
     .phone-display {
-      font-family: var(--font-mono);
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--green);
-      letter-spacing: 0.04em;
+      font-family: var(--font-mono); font-size: 1.5rem; font-weight: 700;
+      color: var(--green); letter-spacing: 0.04em;
       background: rgba(0,232,122,0.07);
-      border: 1.5px solid rgba(0,232,122,0.3);
-      padding: 14px 28px;
-      border-radius: 10px;
+      border: 1.5px solid rgba(0,232,122,0.25);
+      padding: 14px 28px; border-radius: 10px;
     }
-    .hero-hint {
-      font-size: 0.82rem; color: var(--muted);
-      font-family: var(--font-mono);
-    }
-    .hero-stats {
-      display: flex; gap: 32px; margin-top: 44px;
-      padding-top: 36px;
-      border-top: 1px solid var(--border);
-    }
-    .stat-val {
-      font-size: 1.7rem; font-weight: 700;
-      color: var(--text); letter-spacing: -0.02em;
-    }
-    .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+    .hero-hint { font-size: 0.82rem; color: var(--muted); font-family: var(--font-mono); }
+    .hero-stats { display: flex; gap: 36px; margin-top: 44px; padding-top: 36px; border-top: 1px solid var(--border); }
+    .stat-val { font-size: 1.6rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
+    .stat-label { font-size: 0.77rem; color: var(--muted); margin-top: 2px; }
 
     /* PHONE MOCKUP */
     .hero-right { display: flex; justify-content: center; align-items: center; }
-    /* APPLE iPHONE SHELL */
     .phone-shell {
       width: 300px;
       background: #1C1C1E;
       border-radius: 54px;
       border: 2px solid #3a3a3c;
       padding: 14px;
-      box-shadow:
-        0 50px 100px rgba(0,0,0,0.7),
-        0 0 0 1px rgba(255,255,255,0.06),
-        inset 0 0 0 1px rgba(255,255,255,0.04);
+      box-shadow: 0 50px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05), inset 0 0 0 1px rgba(255,255,255,0.03);
       position: relative;
     }
-    /* Side buttons */
     .phone-shell::before {
-      content: '';
-      position: absolute;
-      left: -4px; top: 100px;
-      width: 3px; height: 36px;
-      background: #3a3a3c;
+      content: ''; position: absolute; left: -4px; top: 100px;
+      width: 3px; height: 36px; background: #3a3a3c;
       border-radius: 2px 0 0 2px;
       box-shadow: 0 48px 0 #3a3a3c, 0 90px 0 #3a3a3c;
     }
     .phone-shell::after {
-      content: '';
-      position: absolute;
-      right: -4px; top: 130px;
-      width: 3px; height: 60px;
-      background: #3a3a3c;
+      content: ''; position: absolute; right: -4px; top: 130px;
+      width: 3px; height: 60px; background: #3a3a3c;
       border-radius: 0 2px 2px 0;
     }
     .phone-screen {
-      background: #000;
-      border-radius: 44px;
-      overflow: hidden;
-      min-height: 520px;
-      display: flex;
-      flex-direction: column;
+      background: #000; border-radius: 44px; overflow: hidden;
+      min-height: 520px; display: flex; flex-direction: column;
       font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif;
     }
-    /* Dynamic Island */
     .dynamic-island {
-      width: 120px; height: 34px;
-      background: #000;
+      width: 120px; height: 34px; background: #000;
       border-radius: 0 0 22px 22px;
-      margin: 12px auto 0;
-      position: relative;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      margin: 12px auto 0; position: relative; z-index: 10;
+      display: flex; align-items: center; justify-content: center;
       box-shadow: 0 0 0 2px #1c1c1e;
     }
-    .di-camera {
-      width: 10px; height: 10px;
-      background: #1c2a3a;
-      border-radius: 50%;
-      border: 1.5px solid #2a3a4a;
-      margin-left: 8px;
-    }
-    .di-sensor {
-      flex: 1; height: 6px;
-      background: #111;
-      border-radius: 3px;
-      margin: 0 6px;
-    }
-    /* Status bar */
+    .di-camera { width: 10px; height: 10px; background: #1c2a3a; border-radius: 50%; border: 1.5px solid #2a3a4a; margin-left: 8px; }
+    .di-sensor { flex: 1; height: 6px; background: #111; border-radius: 3px; margin: 0 6px; }
     .status-bar {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 4px 22px 6px;
-      font-size: 0.68rem; font-weight: 600;
-      color: #fff;
-      letter-spacing: -0.01em;
+      padding: 4px 22px 6px; font-size: 0.68rem; font-weight: 600; color: #fff;
     }
     .status-time { font-size: 0.78rem; font-weight: 700; }
     .status-icons { display: flex; align-items: center; gap: 5px; font-size: 0.6rem; }
-
-    /* iMessage header */
     .imessage-header {
-      background: rgba(28,28,30,0.95);
-      backdrop-filter: blur(20px);
+      background: rgba(28,28,30,0.95); backdrop-filter: blur(20px);
       padding: 8px 16px 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      display: flex; flex-direction: column; align-items: center;
       border-bottom: 0.5px solid rgba(255,255,255,0.1);
     }
-    .imessage-back {
-      align-self: flex-start;
-      color: #007AFF;
-      font-size: 0.75rem;
-      font-weight: 400;
-      margin-bottom: 4px;
-      display: flex; align-items: center; gap: 3px;
-    }
+    .imessage-back { align-self: flex-start; color: #007AFF; font-size: 0.75rem; margin-bottom: 4px; }
     .imessage-avatar {
       width: 40px; height: 40px;
       background: linear-gradient(135deg, #00E87A, #00b85f);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
       margin-bottom: 2px;
     }
-    .imessage-name {
-      font-size: 0.78rem; font-weight: 600;
-      color: #fff; margin-bottom: 1px;
-    }
-    .imessage-sub {
-      font-size: 0.62rem; color: #98989f;
-    }
-
-    /* Message area */
-    .bubbles {
-      flex: 1;
-      display: flex; flex-direction: column;
-      gap: 6px;
-      padding: 12px 10px;
-      overflow: hidden;
-    }
+    .imessage-avatar svg { width: 20px; height: 20px; }
+    .imessage-name { font-size: 0.78rem; font-weight: 600; color: #fff; margin-bottom: 1px; }
+    .imessage-sub { font-size: 0.62rem; color: #98989f; }
+    .bubbles { flex: 1; display: flex; flex-direction: column; gap: 6px; padding: 12px 10px; overflow: hidden; }
     .bubble {
-      max-width: 78%;
-      padding: 9px 13px;
-      border-radius: 18px;
-      font-size: 0.72rem;
-      line-height: 1.5;
-      opacity: 0;
-      transform: translateY(8px);
-      letter-spacing: -0.01em;
+      max-width: 78%; padding: 9px 13px; border-radius: 18px;
+      font-size: 0.72rem; line-height: 1.5;
+      opacity: 0; transform: translateY(8px); letter-spacing: -0.01em;
     }
-    /* Incoming — gray iMessage style */
-    .bubble.in {
-      background: #3a3a3c;
-      color: #fff;
-      align-self: flex-start;
-      border-bottom-left-radius: 4px;
-    }
-    /* Outgoing — iMessage blue */
-    .bubble.out {
-      background: #007AFF;
-      color: #fff;
-      font-weight: 500;
-      align-self: flex-end;
-      border-bottom-right-radius: 4px;
-    }
-    .bubble.visible {
-      animation: bubbleIn 0.3s cubic-bezier(0.34,1.2,0.64,1) forwards;
-    }
-    @keyframes bubbleIn {
-      to { opacity: 1; transform: translateY(0); }
+    .bubble.in { background: #3a3a3c; color: #fff; align-self: flex-start; border-bottom-left-radius: 4px; }
+    .bubble.out { background: #007AFF; color: #fff; font-weight: 500; align-self: flex-end; border-bottom-right-radius: 4px; }
+    .bubble.visible { animation: bubbleIn 0.3s cubic-bezier(0.34,1.2,0.64,1) forwards; }
+    @keyframes bubbleIn { to { opacity:1; transform:translateY(0); } }
+    .affiliate-tag {
+      display: inline-block; background: rgba(0,232,122,0.15); color: #00E87A;
+      font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; margin-top: 5px; font-weight: 600;
     }
     .typing {
-      display: flex; gap: 4px; align-items: center;
-      padding: 10px 14px;
-      background: #3a3a3c;
-      border-radius: 18px; border-bottom-left-radius: 4px;
-      align-self: flex-start;
-      opacity: 0;
-      width: 52px;
+      display: flex; gap: 4px; align-items: center; padding: 10px 14px;
+      background: #3a3a3c; border-radius: 18px; border-bottom-left-radius: 4px;
+      align-self: flex-start; opacity: 0; width: 52px;
     }
     .typing.visible { opacity: 1; }
-    .dot {
-      width: 5px; height: 5px; background: #98989f;
-      border-radius: 50%;
-      animation: bounce 1.2s infinite;
-    }
+    .dot { width: 5px; height: 5px; background: #98989f; border-radius: 50%; animation: bounce 1.2s infinite; }
     .dot:nth-child(2) { animation-delay: 0.2s; }
     .dot:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes bounce {
-      0%,80%,100% { transform: translateY(0); }
-      40% { transform: translateY(-4px); }
-    }
-    .affiliate-tag {
-      display: inline-block;
-      background: rgba(0,232,122,0.18);
-      color: #00E87A;
-      font-size: 0.6rem;
-      padding: 2px 6px; border-radius: 4px;
-      margin-top: 5px;
-      font-weight: 600;
-    }
-    /* iMessage input bar */
+    @keyframes bounce { 0%,80%,100% { transform:translateY(0); } 40% { transform:translateY(-4px); } }
     .imessage-input {
-      background: rgba(28,28,30,0.95);
-      backdrop-filter: blur(20px);
+      background: rgba(28,28,30,0.95); backdrop-filter: blur(20px);
       border-top: 0.5px solid rgba(255,255,255,0.1);
-      padding: 8px 12px 16px;
-      display: flex; align-items: center; gap: 8px;
+      padding: 8px 12px 16px; display: flex; align-items: center; gap: 8px;
     }
-    .input-field {
-      flex: 1;
-      background: #2c2c2e;
-      border: 0.5px solid #3a3a3c;
-      border-radius: 18px;
-      padding: 7px 12px;
-      color: #98989f;
-      font-size: 0.68rem;
-      font-family: inherit;
-    }
-    .input-send {
-      width: 28px; height: 28px;
-      background: #007AFF;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.7rem;
-      flex-shrink: 0;
-    }
+    .input-field { flex: 1; background: #2c2c2e; border: 0.5px solid #3a3a3c; border-radius: 18px; padding: 7px 12px; color: #98989f; font-size: 0.68rem; }
+    .input-send { width: 28px; height: 28px; background: #007AFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
-    /* HOW IT WORKS */
-    .section {
-      max-width: 1100px; margin: 0 auto;
-      padding: 100px 48px;
-    }
-    .section-label {
-      font-family: var(--font-mono);
-      font-size: 0.72rem; font-weight: 700;
-      color: var(--green); letter-spacing: 0.1em;
-      text-transform: uppercase; margin-bottom: 16px;
-    }
-    .section-title {
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
-      font-weight: 700; letter-spacing: -0.03em;
-      line-height: 1.15; margin-bottom: 16px;
-    }
-    .section-sub {
-      color: var(--muted); font-size: 1rem;
-      max-width: 520px; margin-bottom: 60px;
-    }
+    /* SECTIONS */
+    .section { max-width: 1100px; margin: 0 auto; padding: 100px 48px; }
+    .section-label { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; color: var(--green); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+    .section-title { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 16px; }
+    .section-sub { color: var(--muted); font-size: 1rem; max-width: 520px; margin-bottom: 60px; }
 
-    .steps {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
-    }
-    .step {
-      background: var(--card);
-      padding: 36px 32px;
-      border: 1px solid var(--border);
-      position: relative;
-    }
+    /* STEPS */
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .step { background: var(--card); padding: 36px 32px; border: 1px solid var(--border); position: relative; }
     .step:first-child { border-radius: 12px 0 0 12px; }
     .step:last-child { border-radius: 0 12px 12px 0; }
-    .step-num {
-      font-family: var(--font-mono);
-      font-size: 0.7rem; color: var(--green);
-      letter-spacing: 0.08em; margin-bottom: 20px;
-      font-weight: 700;
-    }
-    .step-icon {
-      font-size: 2rem; margin-bottom: 16px;
-      display: block;
-    }
-    .step h3 {
-      font-size: 1.05rem; font-weight: 700;
-      margin-bottom: 10px; letter-spacing: -0.01em;
-    }
+    .step-num { font-family: var(--font-mono); font-size: 0.7rem; color: var(--green); letter-spacing: 0.08em; margin-bottom: 20px; font-weight: 700; }
+    .step-icon { margin-bottom: 16px; display: flex; }
+    .step-icon svg { width: 28px; height: 28px; stroke: var(--green); }
+    .step h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.01em; }
     .step p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
-    .step-arrow {
-      position: absolute; right: -13px; top: 50%;
-      transform: translateY(-50%);
-      width: 24px; height: 24px;
-      background: var(--navy);
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.7rem; z-index: 2; color: var(--green);
-    }
+    .step-arrow { position: absolute; right: -13px; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; background: var(--navy); border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2; color: var(--green); font-size: 0.7rem; }
 
-    /* WHY QUICKTEXT */
-    .features-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px;
-    }
-    .feature {
-      background: var(--card);
-      padding: 36px;
-      border: 1px solid var(--border);
-    }
+    /* FEATURES */
+    .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+    .feature { background: var(--card); padding: 36px; border: 1px solid var(--border); }
     .feature:nth-child(1) { border-radius: 12px 0 0 0; }
     .feature:nth-child(2) { border-radius: 0 12px 0 0; }
     .feature:nth-child(3) { border-radius: 0 0 0 12px; }
     .feature:nth-child(4) { border-radius: 0 0 12px 0; }
-    .feature-icon {
-      font-size: 1.6rem; margin-bottom: 16px;
-    }
+    .feature-icon { margin-bottom: 16px; display: flex; }
+    .feature-icon svg { width: 24px; height: 24px; stroke: var(--green); }
     .feature h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
     .feature p { font-size: 0.87rem; color: var(--muted); line-height: 1.65; }
 
-    /* TECH STACK */
-    .tech-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
-    }
-    .tech-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 28px 24px;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .tech-card:hover {
-      border-color: rgba(0,232,122,0.4);
-      transform: translateY(-3px);
-    }
-    .tech-logo {
-      font-size: 1.6rem; margin-bottom: 14px;
-    }
-    .tech-name {
-      font-weight: 700; font-size: 0.9rem; margin-bottom: 6px;
-    }
-    .tech-desc {
-      font-size: 0.78rem; color: var(--muted); line-height: 1.55;
-    }
+    /* TECH */
+    .tech-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .tech-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 28px 24px; transition: border-color 0.2s, transform 0.2s; }
+    .tech-card:hover { border-color: rgba(0,232,122,0.35); transform: translateY(-3px); }
+    .tech-logo { margin-bottom: 14px; display: flex; }
+    .tech-logo svg { width: 24px; height: 24px; stroke: var(--green); }
+    .tech-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; }
+    .tech-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
 
-    /* CTA SECTION */
-    .cta-section {
-      max-width: 800px; margin: 0 auto;
-      padding: 80px 48px 120px;
-      text-align: center;
-    }
-    .cta-box {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 64px 48px;
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-box::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--green), transparent);
-    }
-    .cta-box h2 {
-      font-size: clamp(1.8rem, 3vw, 2.4rem);
-      font-weight: 700; letter-spacing: -0.03em;
-      margin-bottom: 16px;
-    }
-    .cta-box p { color: var(--muted); margin-bottom: 40px; font-size: 1rem; }
-    .cta-number-big {
-      font-family: var(--font-mono);
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 700;
-      color: var(--green);
-      letter-spacing: 0.05em;
-      margin-bottom: 12px;
-    }
+    /* CTA */
+    .cta-section { max-width: 800px; margin: 0 auto; padding: 80px 48px 80px; text-align: center; }
+    .cta-box { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 64px 48px; position: relative; overflow: hidden; }
+    .cta-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--green), transparent); }
+    .cta-box h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 16px; }
+    .cta-box p { color: var(--muted); margin-bottom: 32px; font-size: 1rem; }
+    .cta-number-big { font-family: var(--font-mono); font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; color: var(--green); letter-spacing: 0.05em; margin-bottom: 12px; }
     .cta-hint { font-size: 0.82rem; color: var(--muted); font-family: var(--font-mono); }
 
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .footer-logo {
-      font-family: var(--font-mono);
-      font-weight: 700; color: var(--green); font-size: 0.95rem;
-    }
-    .footer-logo span { color: var(--muted); }
-    footer p { font-size: 0.78rem; color: var(--muted); }
-    footer nav ul { gap: 20px; }
-    footer nav ul a { font-size: 0.8rem; }
+    /* CONSENT */
+    .consent-section { max-width: 800px; margin: 0 auto; padding: 0 48px 80px; }
+    .consent-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 36px 40px; }
+    .consent-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .consent-header svg { width: 18px; height: 18px; stroke: var(--green); flex-shrink: 0; }
+    .consent-header h3 { font-size: 0.95rem; font-weight: 700; }
+    .consent-box p { font-size: 0.83rem; color: var(--muted); line-height: 1.8; margin-bottom: 12px; }
+    .consent-box p:last-child { margin-bottom: 0; }
+    .consent-box strong { color: var(--text); font-weight: 600; }
 
     /* DIVIDER */
-    .divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+    .divider { border: none; border-top: 1px solid var(--border); max-width: 1100px; margin: 0 auto; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
+    .footer-logo { font-family: var(--font-mono); font-weight: 700; color: var(--green); font-size: 0.95rem; }
+    .footer-logo span { color: var(--muted); }
+    footer p { font-size: 0.78rem; color: var(--muted); }
 
     @media (max-width: 768px) {
       nav { padding: 16px 20px; }
-      nav ul { display: none; }
       .hero { grid-template-columns: 1fr; padding: 100px 20px 60px; gap: 40px; }
       .hero-right { display: none; }
       .section { padding: 60px 20px; }
@@ -529,33 +257,29 @@
       .features-grid { grid-template-columns: 1fr; }
       .feature { border-radius: 10px !important; }
       .tech-grid { grid-template-columns: repeat(2, 1fr); }
-      .cta-section { padding: 40px 20px 80px; }
+      .cta-section { padding: 40px 20px 60px; }
       .cta-box { padding: 40px 24px; }
-      footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
-      footer nav { display: none; }
+      .consent-section { padding: 0 20px 60px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 20px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <div class="nav-logo">Quick<span>Text</span></div>
-    <a href="#cta" class="nav-cta">Try it free →</a>
+    <a href="#cta" class="nav-cta">Coming Soon</a>
   </nav>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
       <div class="eyebrow">Coming soon to a city near you</div>
       <h1>Find the best food near you.<br /><em>Just text us.</em></h1>
-      <p class="hero-sub">
-        No app. No login. No algorithm. Text QuickText what you're craving and get back the top nearby spots with live ratings and the best delivery deals — in under 30 seconds.
-      </p>
+      <p class="hero-sub">No app. No login. No algorithm. Text QuickText what you're craving and get back the top nearby spots with live ratings and the best delivery deals.</p>
       <div class="hero-number">
-        <div class="phone-display">Coming soon</div>
+        <div class="phone-display">Coming Soon</div>
       </div>
-      <p class="hero-hint">Drop your number below to be first when we launch.</p>
+      <p class="hero-hint">Drop your location and what you want. We handle the rest.</p>
       <div class="hero-stats">
         <div>
           <div class="stat-val">Fast</div>
@@ -566,62 +290,60 @@
           <div class="stat-label">Cost to use</div>
         </div>
         <div>
-          <div class="stat-val">Works on<br/>any phone</div>
+          <div class="stat-val">Any phone</div>
           <div class="stat-label">No download needed</div>
         </div>
       </div>
     </div>
 
-    <!-- PHONE MOCKUP -->
     <div class="hero-right">
       <div class="phone-shell">
         <div class="phone-screen">
-          <!-- Dynamic Island -->
           <div class="dynamic-island">
             <div class="di-sensor"></div>
             <div class="di-camera"></div>
           </div>
-          <!-- Status bar -->
           <div class="status-bar">
             <span class="status-time">9:41</span>
             <div class="status-icons">
               <span>●●●</span>
               <span>WiFi</span>
-              <span>🔋</span>
+              <svg width="16" height="10" viewBox="0 0 16 10" fill="white"><rect x="0" y="3" width="11" height="7" rx="1.5" fill="none" stroke="white" stroke-width="1.2"/><rect x="1" y="4" width="7" height="5" rx="0.8" fill="white"/><rect x="11.5" y="4.5" width="1.5" height="4" rx="0.75" fill="white" opacity="0.6"/></svg>
             </div>
           </div>
-          <!-- iMessage header -->
           <div class="imessage-header">
-            <div class="imessage-back">‹ Messages</div>
-            <div class="imessage-avatar">🍽️</div>
+            <div class="imessage-back">&#8249; Messages</div>
+            <div class="imessage-avatar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#080D14" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
             <div class="imessage-name">QuickText</div>
             <div class="imessage-sub">AI Food Finder · iMessage</div>
           </div>
-          <!-- Bubbles -->
           <div class="bubbles" id="bubbles">
             <div class="bubble out" data-delay="400">best sushi near downtown austin</div>
             <div class="typing" id="typing">
               <div class="dot"></div><div class="dot"></div><div class="dot"></div>
             </div>
             <div class="bubble in" data-delay="2200">
-              🍣 Top sushi near you<br/><br/>
-              1. Uchi — 4.8★ 0.3mi $$$<br/>
-              2. Musashino — 4.6★ 0.8mi $$<br/>
-              3. Iron Sushi — 4.4★ 1.2mi $<br/><br/>
+              Top sushi near you<br/><br/>
+              1. Uchi — 4.8 stars · 0.3mi · $$$<br/>
+              2. Musashino — 4.6 stars · 0.8mi · $$<br/>
+              3. Iron Sushi — 4.4 stars · 1.2mi · $<br/><br/>
               Reply 1, 2, or 3 for delivery
               <div class="affiliate-tag">deals via DoorDash</div>
             </div>
             <div class="bubble out" data-delay="4000">1</div>
             <div class="bubble in" data-delay="5200">
-              Uchi 🔗 Order now:<br/>
+              Uchi — Order delivery:<br/>
               doordash.com/uchi-austin<br/><br/>
-              <span style="color:#30d158">🎁 $5 off your first order</span>
+              <span style="color:#30d158;font-weight:600;">$5 off your first order</span>
             </div>
           </div>
-          <!-- Input bar -->
           <div class="imessage-input">
             <div class="input-field">iMessage</div>
-            <div class="input-send">↑</div>
+            <div class="input-send">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+            </div>
           </div>
         </div>
       </div>
@@ -630,165 +352,168 @@
 
   <hr class="divider" />
 
-  <!-- HOW IT WORKS -->
   <section class="section" id="how">
     <div class="section-label">How it works</div>
     <h2 class="section-title">Three texts. Done.</h2>
     <p class="section-sub">No accounts. No passwords. No downloading anything. QuickText works with the messages app already on your phone.</p>
-
     <div class="steps">
       <div class="step">
         <div class="step-num">STEP 01</div>
-        <span class="step-icon">📱</span>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18" stroke-width="2.5"/></svg>
+        </div>
         <h3>Text what you want</h3>
-        <p>Tell us what you're craving and roughly where you are. "tacos near campus" or "cheap ramen downtown Chicago" — plain English, no special format.</p>
-        <div class="step-arrow">→</div>
+        <p>Tell us what you're craving and roughly where you are. Plain English, no special format required.</p>
+        <div class="step-arrow">&#8250;</div>
       </div>
       <div class="step">
         <div class="step-num">STEP 02</div>
-        <span class="step-icon">⚡</span>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
         <h3>We find the best options</h3>
-        <p>Our AI searches Google Places and Yelp in real time, pulls ratings, distance, price range, and any active deals — then formats it into one clean reply.</p>
-        <div class="step-arrow">→</div>
+        <p>Our AI searches Google Places in real time, pulls ratings, distance, and price range — formatted into one clean reply.</p>
+        <div class="step-arrow">&#8250;</div>
       </div>
       <div class="step">
         <div class="step-num">STEP 03</div>
-        <span class="step-icon">🛵</span>
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
         <h3>Order or go</h3>
-        <p>Reply with a number to get a direct delivery link with any active promo codes. We remember your location so next time it's even faster.</p>
+        <p>Reply with a number to get a direct delivery link with any active promo codes. We remember your location for next time.</p>
       </div>
     </div>
   </section>
 
   <hr class="divider" />
 
-  <!-- WHY QUICKTEXT -->
   <section class="section" id="why">
     <div class="section-label">Why QuickText</div>
     <h2 class="section-title">No sponsored results.<br/>No paid placements.<br/><em style="font-style:normal;color:var(--green)">Just honest answers.</em></h2>
     <p class="section-sub">Google shows you whoever paid the most. Yelp buries restaurants that don't advertise. QuickText has no algorithm to game — just real ratings, real distance, real deals.</p>
-
     <div class="features-grid">
       <div class="feature">
-        <div class="feature-icon">🚫</div>
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg>
+        </div>
         <h3>No app required</h3>
-        <p>Works on every phone that can send a text message. iPhone, Android, or even a basic flip phone. Zero storage space, zero permissions.</p>
+        <p>Works on every phone that can send a text message. Zero storage space, zero permissions, zero setup.</p>
       </div>
       <div class="feature">
-        <div class="feature-icon">📍</div>
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
         <h3>Remembers your location</h3>
-        <p>Tell us your neighborhood once. We store it by your number and use it automatically for every future search — you never have to type it again.</p>
+        <p>Tell us your neighborhood once. We store it and use it automatically for every future search.</p>
       </div>
       <div class="feature">
-        <div class="feature-icon">💸</div>
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        </div>
         <h3>Real deals, not fake discounts</h3>
-        <p>We surface active promo codes and first-order discounts from DoorDash and Uber Eats. Real savings on every recommendation, not padded prices.</p>
+        <p>We surface active promo codes and first-order discounts from DoorDash and Uber Eats on every recommendation.</p>
       </div>
       <div class="feature">
-        <div class="feature-icon">🤖</div>
-        <h3>AI that stays on topic</h3>
-        <p>QuickText is tuned specifically for food and local discovery. It won't hallucinate restaurants that don't exist — every result is a real place with a real rating.</p>
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        </div>
+        <h3>AI that stays accurate</h3>
+        <p>QuickText pulls live data for every query. Every result is a real place with a verified rating — no hallucinations.</p>
       </div>
     </div>
   </section>
 
   <hr class="divider" />
 
-  <!-- TECH STACK -->
   <section class="section" id="tech">
     <div class="section-label">Built on</div>
     <h2 class="section-title">Serious infrastructure.<br/>Simple experience.</h2>
-    <p class="section-sub">QuickText stitches together best-in-class APIs so you get fast, accurate answers every time.</p>
-
+    <p class="section-sub">QuickText connects best-in-class APIs to deliver fast, accurate results on every query.</p>
     <div class="tech-grid">
       <div class="tech-card">
-        <div class="tech-logo">📡</div>
+        <div class="tech-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+        </div>
         <div class="tech-name">Twilio</div>
         <div class="tech-desc">Powers the SMS layer. Your text arrives at our server in milliseconds via Twilio webhooks.</div>
       </div>
       <div class="tech-card">
-        <div class="tech-logo">📍</div>
+        <div class="tech-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        </div>
         <div class="tech-name">Google Places</div>
         <div class="tech-desc">Live restaurant data — names, ratings, hours, price level, and distance from your location.</div>
       </div>
       <div class="tech-card">
-        <div class="tech-logo">🧠</div>
+        <div class="tech-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a8 8 0 00-8 8c0 5.4 7.05 11.5 7.35 11.76a1 1 0 001.3 0C13 21.5 20 15.4 20 10a8 8 0 00-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
         <div class="tech-name">Claude AI</div>
-        <div class="tech-desc">Formats raw data into a clean, human SMS reply. Understands natural language queries in any phrasing.</div>
+        <div class="tech-desc">Formats raw data into a clean, concise SMS reply. Understands natural language queries in any phrasing.</div>
       </div>
       <div class="tech-card">
-        <div class="tech-logo">🛵</div>
+        <div class="tech-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        </div>
         <div class="tech-name">DoorDash & Uber Eats</div>
-        <div class="tech-desc">Affiliate integrations surface real delivery deals and promo codes alongside every recommendation.</div>
+        <div class="tech-desc">Affiliate integrations surface active delivery deals and promo codes alongside every recommendation.</div>
       </div>
     </div>
   </section>
 
   <hr class="divider" />
 
-  <!-- CTA -->
   <section class="cta-section" id="cta">
     <div class="cta-box">
-      <h2>Be first when we launch.</h2>
-      <p>We're setting up our SMS number now. Leave your number and we'll text you the moment QuickText goes live in your city.</p>
-      <div class="cta-number-big">Coming Soon</div>
-      <p class="cta-hint">Check back soon for our launch city announcement.</p>
+      <h2>Coming Soon.</h2>
+      <p>We are setting up our SMS number now. Check back soon for our launch city announcement.</p>
+      <div class="cta-number-big">Launch Pending</div>
+      <p class="cta-hint">Free to use. Works on any phone. No download needed.</p>
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <section class="consent-section">
+    <div class="consent-box">
+      <div class="consent-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <h3>SMS Messaging Consent</h3>
+      </div>
+      <p>By texting QuickText, you consent to receive SMS messages in response to your requests. Message and data rates may apply. Message frequency varies.</p>
+      <p>Reply <strong>STOP</strong> to unsubscribe. Reply <strong>HELP</strong> for help.</p>
+    </div>
+  </section>
+
   <footer>
     <div class="footer-logo">Quick<span>Text</span></div>
     <p>© 2025 QuickText. Built for hungry people everywhere.</p>
   </footer>
 
   <script>
-    // Animate SMS bubbles in sequence
     const bubbles = document.querySelectorAll('.bubble[data-delay]');
     const typing = document.getElementById('typing');
-
-    bubbles.forEach((bubble, i) => {
-      const delay = parseInt(bubble.dataset.delay);
-      setTimeout(() => {
-        // Show typing indicator before incoming messages
-        if (bubble.classList.contains('in') && i === 1) {
-          typing.classList.add('visible');
-          setTimeout(() => {
-            typing.classList.remove('visible');
-            bubble.classList.add('visible');
-          }, 1200);
-        } else {
-          bubble.classList.add('visible');
-        }
-      }, delay);
-    });
-
-    // Replay animation every 9 seconds
-    setInterval(() => {
-      bubbles.forEach(b => b.classList.remove('visible'));
-      typing.classList.remove('visible');
+    function runAnimation() {
       bubbles.forEach((bubble, i) => {
         const delay = parseInt(bubble.dataset.delay);
         setTimeout(() => {
           if (bubble.classList.contains('in') && i === 1) {
             typing.classList.add('visible');
-            setTimeout(() => {
-              typing.classList.remove('visible');
-              bubble.classList.add('visible');
-            }, 1200);
-          } else {
-            bubble.classList.add('visible');
-          }
+            setTimeout(() => { typing.classList.remove('visible'); bubble.classList.add('visible'); }, 1200);
+          } else { bubble.classList.add('visible'); }
         }, delay);
       });
+    }
+    runAnimation();
+    setInterval(() => {
+      bubbles.forEach(b => b.classList.remove('visible'));
+      typing.classList.remove('visible');
+      setTimeout(runAnimation, 300);
     }, 9000);
-
-    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
         e.preventDefault();
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth' });
       });
     });
   </script>
