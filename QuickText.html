@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuickText — Find Food. Text a Number.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #00E87A;
+      --green-dim: #00b85f;
+      --navy: #080D14;
+      --card: #0E1620;
+      --card2: #141e2c;
+      --border: #1e2e42;
+      --text: #E8EFF8;
+      --muted: #6B8299;
+      --bubble-in: #162030;
+      --bubble-out: #00E87A;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--text);
+      font-family: var(--font-display);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(8,13,20,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--green);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--text); }
+    nav ul { list-style: none; display: flex; gap: 32px; }
+    nav ul a {
+      color: var(--muted); text-decoration: none; font-size: 0.9rem;
+      font-weight: 500; transition: color 0.2s;
+    }
+    nav ul a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--green); color: var(--navy);
+      padding: 9px 22px; border-radius: 6px;
+      font-weight: 700; font-size: 0.85rem;
+      text-decoration: none; font-family: var(--font-mono);
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--green-dim); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 60px;
+      padding: 120px 48px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .hero-left { max-width: 560px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,232,122,0.1);
+      border: 1px solid rgba(0,232,122,0.25);
+      color: var(--green);
+      padding: 6px 14px; border-radius: 100px;
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .eyebrow::before {
+      content: ''; width: 6px; height: 6px;
+      background: var(--green); border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+    h1 {
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--green);
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      max-width: 460px;
+    }
+    .hero-number {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 16px;
+    }
+    .phone-display {
+      font-family: var(--font-mono);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 0.04em;
+      background: rgba(0,232,122,0.07);
+      border: 1.5px solid rgba(0,232,122,0.3);
+      padding: 14px 28px;
+      border-radius: 10px;
+    }
+    .hero-hint {
+      font-size: 0.82rem; color: var(--muted);
+      font-family: var(--font-mono);
+    }
+    .hero-stats {
+      display: flex; gap: 32px; margin-top: 44px;
+      padding-top: 36px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-val {
+      font-size: 1.7rem; font-weight: 700;
+      color: var(--text); letter-spacing: -0.02em;
+    }
+    .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+    /* PHONE MOCKUP */
+    .hero-right { display: flex; justify-content: center; align-items: center; }
+    /* APPLE iPHONE SHELL */
+    .phone-shell {
+      width: 300px;
+      background: #1C1C1E;
+      border-radius: 54px;
+      border: 2px solid #3a3a3c;
+      padding: 14px;
+      box-shadow:
+        0 50px 100px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(255,255,255,0.06),
+        inset 0 0 0 1px rgba(255,255,255,0.04);
+      position: relative;
+    }
+    /* Side buttons */
+    .phone-shell::before {
+      content: '';
+      position: absolute;
+      left: -4px; top: 100px;
+      width: 3px; height: 36px;
+      background: #3a3a3c;
+      border-radius: 2px 0 0 2px;
+      box-shadow: 0 48px 0 #3a3a3c, 0 90px 0 #3a3a3c;
+    }
+    .phone-shell::after {
+      content: '';
+      position: absolute;
+      right: -4px; top: 130px;
+      width: 3px; height: 60px;
+      background: #3a3a3c;
+      border-radius: 0 2px 2px 0;
+    }
+    .phone-screen {
+      background: #000;
+      border-radius: 44px;
+      overflow: hidden;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+    }
+    /* Dynamic Island */
+    .dynamic-island {
+      width: 120px; height: 34px;
+      background: #000;
+      border-radius: 0 0 22px 22px;
+      margin: 12px auto 0;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 2px #1c1c1e;
+    }
+    .di-camera {
+      width: 10px; height: 10px;
+      background: #1c2a3a;
+      border-radius: 50%;
+      border: 1.5px solid #2a3a4a;
+      margin-left: 8px;
+    }
+    .di-sensor {
+      flex: 1; height: 6px;
+      background: #111;
+      border-radius: 3px;
+      margin: 0 6px;
+    }
+    /* Status bar */
+    .status-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 4px 22px 6px;
+      font-size: 0.68rem; font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+    .status-time { font-size: 0.78rem; font-weight: 700; }
+    .status-icons { display: flex; align-items: center; gap: 5px; font-size: 0.6rem; }
+
+    /* iMessage header */
+    .imessage-header {
+      background: rgba(28,28,30,0.95);
+      backdrop-filter: blur(20px);
+      padding: 8px 16px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-bottom: 0.5px solid rgba(255,255,255,0.1);
+    }
+    .imessage-back {
+      align-self: flex-start;
+      color: #007AFF;
+      font-size: 0.75rem;
+      font-weight: 400;
+      margin-bottom: 4px;
+      display: flex; align-items: center; gap: 3px;
+    }
+    .imessage-avatar {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, #00E87A, #00b85f);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      margin-bottom: 2px;
+    }
+    .imessage-name {
+      font-size: 0.78rem; font-weight: 600;
+      color: #fff; margin-bottom: 1px;
+    }
+    .imessage-sub {
+      font-size: 0.62rem; color: #98989f;
+    }
+
+    /* Message area */
+    .bubbles {
+      flex: 1;
+      display: flex; flex-direction: column;
+      gap: 6px;
+      padding: 12px 10px;
+      overflow: hidden;
+    }
+    .bubble {
+      max-width: 78%;
+      padding: 9px 13px;
+      border-radius: 18px;
+      font-size: 0.72rem;
+      line-height: 1.5;
+      opacity: 0;
+      transform: translateY(8px);
+      letter-spacing: -0.01em;
+    }
+    /* Incoming — gray iMessage style */
+    .bubble.in {
+      background: #3a3a3c;
+      color: #fff;
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+    /* Outgoing — iMessage blue */
+    .bubble.out {
+      background: #007AFF;
+      color: #fff;
+      font-weight: 500;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+    .bubble.visible {
+      animation: bubbleIn 0.3s cubic-bezier(0.34,1.2,0.64,1) forwards;
+    }
+    @keyframes bubbleIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .typing {
+      display: flex; gap: 4px; align-items: center;
+      padding: 10px 14px;
+      background: #3a3a3c;
+      border-radius: 18px; border-bottom-left-radius: 4px;
+      align-self: flex-start;
+      opacity: 0;
+      width: 52px;
+    }
+    .typing.visible { opacity: 1; }
+    .dot {
+      width: 5px; height: 5px; background: #98989f;
+      border-radius: 50%;
+      animation: bounce 1.2s infinite;
+    }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+      0%,80%,100% { transform: translateY(0); }
+      40% { transform: translateY(-4px); }
+    }
+    .affiliate-tag {
+      display: inline-block;
+      background: rgba(0,232,122,0.18);
+      color: #00E87A;
+      font-size: 0.6rem;
+      padding: 2px 6px; border-radius: 4px;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+    /* iMessage input bar */
+    .imessage-input {
+      background: rgba(28,28,30,0.95);
+      backdrop-filter: blur(20px);
+      border-top: 0.5px solid rgba(255,255,255,0.1);
+      padding: 8px 12px 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .input-field {
+      flex: 1;
+      background: #2c2c2e;
+      border: 0.5px solid #3a3a3c;
+      border-radius: 18px;
+      padding: 7px 12px;
+      color: #98989f;
+      font-size: 0.68rem;
+      font-family: inherit;
+    }
+    .input-send {
+      width: 28px; height: 28px;
+      background: #007AFF;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+    }
+
+    /* HOW IT WORKS */
+    .section {
+      max-width: 1100px; margin: 0 auto;
+      padding: 100px 48px;
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem; font-weight: 700;
+      color: var(--green); letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 700; letter-spacing: -0.03em;
+      line-height: 1.15; margin-bottom: 16px;
+    }
+    .section-sub {
+      color: var(--muted); font-size: 1rem;
+      max-width: 520px; margin-bottom: 60px;
+    }
+
+    .steps {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+    }
+    .step {
+      background: var(--card);
+      padding: 36px 32px;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .step:first-child { border-radius: 12px 0 0 12px; }
+    .step:last-child { border-radius: 0 12px 12px 0; }
+    .step-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem; color: var(--green);
+      letter-spacing: 0.08em; margin-bottom: 20px;
+      font-weight: 700;
+    }
+    .step-icon {
+      font-size: 2rem; margin-bottom: 16px;
+      display: block;
+    }
+    .step h3 {
+      font-size: 1.05rem; font-weight: 700;
+      margin-bottom: 10px; letter-spacing: -0.01em;
+    }
+    .step p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+    .step-arrow {
+      position: absolute; right: -13px; top: 50%;
+      transform: translateY(-50%);
+      width: 24px; height: 24px;
+      background: var(--navy);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; z-index: 2; color: var(--green);
+    }
+
+    /* WHY QUICKTEXT */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px;
+    }
+    .feature {
+      background: var(--card);
+      padding: 36px;
+      border: 1px solid var(--border);
+    }
+    .feature:nth-child(1) { border-radius: 12px 0 0 0; }
+    .feature:nth-child(2) { border-radius: 0 12px 0 0; }
+    .feature:nth-child(3) { border-radius: 0 0 0 12px; }
+    .feature:nth-child(4) { border-radius: 0 0 12px 0; }
+    .feature-icon {
+      font-size: 1.6rem; margin-bottom: 16px;
+    }
+    .feature h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .feature p { font-size: 0.87rem; color: var(--muted); line-height: 1.65; }
+
+    /* TECH STACK */
+    .tech-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .tech-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px 24px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .tech-card:hover {
+      border-color: rgba(0,232,122,0.4);
+      transform: translateY(-3px);
+    }
+    .tech-logo {
+      font-size: 1.6rem; margin-bottom: 14px;
+    }
+    .tech-name {
+      font-weight: 700; font-size: 0.9rem; margin-bottom: 6px;
+    }
+    .tech-desc {
+      font-size: 0.78rem; color: var(--muted); line-height: 1.55;
+    }
+
+    /* CTA SECTION */
+    .cta-section {
+      max-width: 800px; margin: 0 auto;
+      padding: 80px 48px 120px;
+      text-align: center;
+    }
+    .cta-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 64px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-box::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+    }
+    .cta-box h2 {
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 700; letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .cta-box p { color: var(--muted); margin-bottom: 40px; font-size: 1rem; }
+    .cta-number-big {
+      font-family: var(--font-mono);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    .cta-hint { font-size: 0.82rem; color: var(--muted); font-family: var(--font-mono); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-logo {
+      font-family: var(--font-mono);
+      font-weight: 700; color: var(--green); font-size: 0.95rem;
+    }
+    .footer-logo span { color: var(--muted); }
+    footer p { font-size: 0.78rem; color: var(--muted); }
+    footer nav ul { gap: 20px; }
+    footer nav ul a { font-size: 0.8rem; }
+
+    /* DIVIDER */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      nav ul { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 100px 20px 60px; gap: 40px; }
+      .hero-right { display: none; }
+      .section { padding: 60px 20px; }
+      .steps { grid-template-columns: 1fr; }
+      .step { border-radius: 10px !important; }
+      .step-arrow { display: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .feature { border-radius: 10px !important; }
+      .tech-grid { grid-template-columns: repeat(2, 1fr); }
+      .cta-section { padding: 40px 20px 80px; }
+      .cta-box { padding: 40px 24px; }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
+      footer nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Quick<span>Text</span></div>
+    <a href="#cta" class="nav-cta">Try it free →</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">Coming soon to a city near you</div>
+      <h1>Find the best food near you.<br /><em>Just text us.</em></h1>
+      <p class="hero-sub">
+        No app. No login. No algorithm. Text QuickText what you're craving and get back the top nearby spots with live ratings and the best delivery deals — in under 30 seconds.
+      </p>
+      <div class="hero-number">
+        <div class="phone-display">Coming soon</div>
+      </div>
+      <p class="hero-hint">Drop your number below to be first when we launch.</p>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-val">Fast</div>
+          <div class="stat-label">Response time</div>
+        </div>
+        <div>
+          <div class="stat-val">$0</div>
+          <div class="stat-label">Cost to use</div>
+        </div>
+        <div>
+          <div class="stat-val">Works on<br/>any phone</div>
+          <div class="stat-label">No download needed</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHONE MOCKUP -->
+    <div class="hero-right">
+      <div class="phone-shell">
+        <div class="phone-screen">
+          <!-- Dynamic Island -->
+          <div class="dynamic-island">
+            <div class="di-sensor"></div>
+            <div class="di-camera"></div>
+          </div>
+          <!-- Status bar -->
+          <div class="status-bar">
+            <span class="status-time">9:41</span>
+            <div class="status-icons">
+              <span>●●●</span>
+              <span>WiFi</span>
+              <span>🔋</span>
+            </div>
+          </div>
+          <!-- iMessage header -->
+          <div class="imessage-header">
+            <div class="imessage-back">‹ Messages</div>
+            <div class="imessage-avatar">🍽️</div>
+            <div class="imessage-name">QuickText</div>
+            <div class="imessage-sub">AI Food Finder · iMessage</div>
+          </div>
+          <!-- Bubbles -->
+          <div class="bubbles" id="bubbles">
+            <div class="bubble out" data-delay="400">best sushi near downtown austin</div>
+            <div class="typing" id="typing">
+              <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            </div>
+            <div class="bubble in" data-delay="2200">
+              🍣 Top sushi near you<br/><br/>
+              1. Uchi — 4.8★ 0.3mi $$$<br/>
+              2. Musashino — 4.6★ 0.8mi $$<br/>
+              3. Iron Sushi — 4.4★ 1.2mi $<br/><br/>
+              Reply 1, 2, or 3 for delivery
+              <div class="affiliate-tag">deals via DoorDash</div>
+            </div>
+            <div class="bubble out" data-delay="4000">1</div>
+            <div class="bubble in" data-delay="5200">
+              Uchi 🔗 Order now:<br/>
+              doordash.com/uchi-austin<br/><br/>
+              <span style="color:#30d158">🎁 $5 off your first order</span>
+            </div>
+          </div>
+          <!-- Input bar -->
+          <div class="imessage-input">
+            <div class="input-field">iMessage</div>
+            <div class="input-send">↑</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="section-label">How it works</div>
+    <h2 class="section-title">Three texts. Done.</h2>
+    <p class="section-sub">No accounts. No passwords. No downloading anything. QuickText works with the messages app already on your phone.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">STEP 01</div>
+        <span class="step-icon">📱</span>
+        <h3>Text what you want</h3>
+        <p>Tell us what you're craving and roughly where you are. "tacos near campus" or "cheap ramen downtown Chicago" — plain English, no special format.</p>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="step">
+        <div class="step-num">STEP 02</div>
+        <span class="step-icon">⚡</span>
+        <h3>We find the best options</h3>
+        <p>Our AI searches Google Places and Yelp in real time, pulls ratings, distance, price range, and any active deals — then formats it into one clean reply.</p>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="step">
+        <div class="step-num">STEP 03</div>
+        <span class="step-icon">🛵</span>
+        <h3>Order or go</h3>
+        <p>Reply with a number to get a direct delivery link with any active promo codes. We remember your location so next time it's even faster.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- WHY QUICKTEXT -->
+  <section class="section" id="why">
+    <div class="section-label">Why QuickText</div>
+    <h2 class="section-title">No sponsored results.<br/>No paid placements.<br/><em style="font-style:normal;color:var(--green)">Just honest answers.</em></h2>
+    <p class="section-sub">Google shows you whoever paid the most. Yelp buries restaurants that don't advertise. QuickText has no algorithm to game — just real ratings, real distance, real deals.</p>
+
+    <div class="features-grid">
+      <div class="feature">
+        <div class="feature-icon">🚫</div>
+        <h3>No app required</h3>
+        <p>Works on every phone that can send a text message. iPhone, Android, or even a basic flip phone. Zero storage space, zero permissions.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📍</div>
+        <h3>Remembers your location</h3>
+        <p>Tell us your neighborhood once. We store it by your number and use it automatically for every future search — you never have to type it again.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">💸</div>
+        <h3>Real deals, not fake discounts</h3>
+        <p>We surface active promo codes and first-order discounts from DoorDash and Uber Eats. Real savings on every recommendation, not padded prices.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🤖</div>
+        <h3>AI that stays on topic</h3>
+        <p>QuickText is tuned specifically for food and local discovery. It won't hallucinate restaurants that don't exist — every result is a real place with a real rating.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- TECH STACK -->
+  <section class="section" id="tech">
+    <div class="section-label">Built on</div>
+    <h2 class="section-title">Serious infrastructure.<br/>Simple experience.</h2>
+    <p class="section-sub">QuickText stitches together best-in-class APIs so you get fast, accurate answers every time.</p>
+
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-logo">📡</div>
+        <div class="tech-name">Twilio</div>
+        <div class="tech-desc">Powers the SMS layer. Your text arrives at our server in milliseconds via Twilio webhooks.</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-logo">📍</div>
+        <div class="tech-name">Google Places</div>
+        <div class="tech-desc">Live restaurant data — names, ratings, hours, price level, and distance from your location.</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-logo">🧠</div>
+        <div class="tech-name">Claude AI</div>
+        <div class="tech-desc">Formats raw data into a clean, human SMS reply. Understands natural language queries in any phrasing.</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-logo">🛵</div>
+        <div class="tech-name">DoorDash & Uber Eats</div>
+        <div class="tech-desc">Affiliate integrations surface real delivery deals and promo codes alongside every recommendation.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CTA -->
+  <section class="cta-section" id="cta">
+    <div class="cta-box">
+      <h2>Be first when we launch.</h2>
+      <p>We're setting up our SMS number now. Leave your number and we'll text you the moment QuickText goes live in your city.</p>
+      <div class="cta-number-big">Coming Soon</div>
+      <p class="cta-hint">Check back soon for our launch city announcement.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Quick<span>Text</span></div>
+    <p>© 2025 QuickText. Built for hungry people everywhere.</p>
+  </footer>
+
+  <script>
+    // Animate SMS bubbles in sequence
+    const bubbles = document.querySelectorAll('.bubble[data-delay]');
+    const typing = document.getElementById('typing');
+
+    bubbles.forEach((bubble, i) => {
+      const delay = parseInt(bubble.dataset.delay);
+      setTimeout(() => {
+        // Show typing indicator before incoming messages
+        if (bubble.classList.contains('in') && i === 1) {
+          typing.classList.add('visible');
+          setTimeout(() => {
+            typing.classList.remove('visible');
+            bubble.classList.add('visible');
+          }, 1200);
+        } else {
+          bubble.classList.add('visible');
+        }
+      }, delay);
+    });
+
+    // Replay animation every 9 seconds
+    setInterval(() => {
+      bubbles.forEach(b => b.classList.remove('visible'));
+      typing.classList.remove('visible');
+      bubbles.forEach((bubble, i) => {
+        const delay = parseInt(bubble.dataset.delay);
+        setTimeout(() => {
+          if (bubble.classList.contains('in') && i === 1) {
+            typing.classList.add('visible');
+            setTimeout(() => {
+              typing.classList.remove('visible');
+              bubble.classList.add('visible');
+            }, 1200);
+          } else {
+            bubble.classList.add('visible');
+          }
+        }, delay);
+      });
+    }, 9000);
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
